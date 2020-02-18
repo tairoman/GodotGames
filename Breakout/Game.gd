@@ -15,3 +15,7 @@ func _ready():
 
 func _on_StartTimer_timeout():
     $Ball.start()
+
+
+func _on_Ball_collided():
+    $Bounce1.play()
