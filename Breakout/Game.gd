@@ -25,6 +25,10 @@ func _ready():
     var right = static_rectangle.instance()
     add_child(right)
     right.create_rect(Rect2(Vector2(screen_rect.x, 0), Vector2(screen_rect.x + 100, screen_rect.y)))
+    
+    # Set up rect area
+    $RectArea.rect_area = Rect2(Vector2(50, 50), Vector2(screen_rect.x - 100, 200))
+    $RectArea.build()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -33,6 +37,7 @@ func _ready():
 func _on_StartTimer_timeout():
     $Ball.start()
 
-
-func _on_Ball_collided():
+func _on_Ball_collided(obj):
     $Bounce1.play()
+    if (obj.is_in_group("rect_area")):
+        obj.queue_free()

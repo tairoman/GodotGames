@@ -3,7 +3,7 @@ extends KinematicBody2D
 var velocity = Vector2()
 var speed = 200
 
-signal collided
+signal collided(obj)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,5 +27,5 @@ func _draw():
 func _physics_process(delta):
     var collision = move_and_collide(velocity * delta)
     if collision:
-        emit_signal("collided")
+        emit_signal("collided", collision.collider)
         velocity = velocity.bounce(collision.normal)
