@@ -30,10 +30,14 @@ func _ready():
     $RectArea.rect_area = Rect2(Vector2(50, 50), Vector2(screen_rect.x - 100, 200))
     $RectArea.build()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#    pass
+func _process(delta):
+    
+    if Input.is_action_pressed("ui_cancel"):
+        get_tree().quit()
 
+func exit_game():
+    get_tree().quit()
+    
 func _on_StartTimer_timeout():
     $Ball.start()
 

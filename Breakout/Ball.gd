@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 var velocity = Vector2()
-var speed = 200
+export var speed = 400
 
 signal collided(obj)
 

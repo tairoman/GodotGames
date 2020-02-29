@@ -23,3 +23,4 @@ func update_collision_rect():
 
 func _draw():
     draw_rect(self.rect, self.color)
+    draw_rect(self.rect, self.color.darkened(0.3), false)

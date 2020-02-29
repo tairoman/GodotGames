@@ -15,7 +15,7 @@ script = ExtResource( 1 )
 position = Vector2( 500, 0 )
 
 [node name="Ball" parent="." instance=ExtResource( 3 )]
-position = Vector2( 441.651, 260.77 )
+position = Vector2( 500.377, 348.305 )
 
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -24,7 +24,6 @@ one_shot = true
 [node name="Bounce1" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 volume_db = -15.0
-attenuation = 1.0
 
 [node name="RectArea" parent="." instance=ExtResource( 5 )]
 rect_area = Rect2( 0, 0, 0, 0 )
