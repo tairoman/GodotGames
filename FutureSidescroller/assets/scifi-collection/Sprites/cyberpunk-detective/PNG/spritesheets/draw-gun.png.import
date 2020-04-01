@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/draw-gun.png-f4af73c2221428fe6e7a41d965896be8.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/scifi-collection/Sprites/cyberpunk-detective/PNG/spritesheets/draw-gun.png"
+dest_files=[ "res://.import/draw-gun.png-f4af73c2221428fe6e7a41d965896be8.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
