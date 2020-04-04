@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/idle1.tres" type="Texture" id=2]
@@ -15,8 +15,11 @@
 [ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/run9.tres" type="Texture" id=13]
 [ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/run10.tres" type="Texture" id=14]
 [ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/run11.tres" type="Texture" id=15]
+[ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/shoot1.tres" type="Texture" id=16]
+[ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/shoot2.tres" type="Texture" id=17]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31.2542, 36.5757 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -29,6 +32,11 @@ animations = [ {
 "loop": true,
 "name": "run",
 "speed": 15.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "shoot",
+"speed": 12.0
 } ]
 
 [node name="Area2D" type="Area2D"]
@@ -41,7 +49,11 @@ __meta__ = {
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 3.32867, 2.7739 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
-animation = "run"
-frame = 3
+animation = "shoot"
+
+[node name="BulletPosition" type="Position2D" parent="."]
+position = Vector2( 39.9441, -9.15385 )
+[connection signal="frame_changed" from="AnimatedSprite" to="." method="_on_AnimatedSprite_frame_changed"]
