@@ -10,9 +10,13 @@ enum PlayerState {
 
 signal spawn_bullet(pos, direction)
 
-var speed = 200
+var run_speed = 200
+var fall_speed = 10
+var jump_speed = 300
 var current_state = PlayerState.idle
 var direction = 1
+
+var move_vec : Vector2 = Vector2()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,47 +25,45 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-    var move_vec = Vector2()
-    move_vec.y = 1
+    move_vec.y += fall_speed
     
     var changed_state : bool = false
     var key_pressed : bool = false
     
-    if Input.is_action_pressed("ui_right"):
-        key_pressed = true
-        changed_state = set_state(PlayerState.running_right)
-    if Input.is_action_pressed("ui_left"):
-        key_pressed = true
-        changed_state = set_state(PlayerState.running_left)
-    if Input.is_action_pressed("ui_jump"):
-        key_pressed = true
-        changed_state = set_state(PlayerState.jumping)
-        move_vec.y = -1
     if Input.is_action_pressed("ui_shoot"):
         key_pressed = true
         changed_state = set_state(PlayerState.shooting)
+        move_vec.x = 0
+    elif Input.is_action_pressed("ui_right"):
+        key_pressed = true
+        changed_state = set_state(PlayerState.running_right)
+        move_vec.x = run_speed
+    elif Input.is_action_pressed("ui_left"):
+        key_pressed = true
+        changed_state = set_state(PlayerState.running_left)
+        move_vec.x = -run_speed
+    else:
+        move_vec.x = 0
+        if is_on_floor():
+            changed_state = set_state(PlayerState.idle)
     
-    if not key_pressed:
-        changed_state = set_state(PlayerState.idle)
-    
-    if current_state == PlayerState.running_right:
-        move_vec.x = 1
-    elif current_state == PlayerState.running_left:
-        move_vec.x = -1
+    if is_on_floor() && Input.is_action_pressed("ui_jump"):
+        key_pressed = true
+        changed_state = set_state(PlayerState.jumping)
+        move_vec.y = -jump_speed
         
-       
-    if changed_state: 
-        set_animation()
+    set_animation()
 
     if (move_vec.x != 0):
         direction = sign(move_vec.x)
     
-    move_vec = move_vec.normalized() * speed
-    move_and_slide(move_vec,Vector2(0,-1))
-
+    move_and_slide(move_vec, Vector2(0,-1))
 
 func set_state(to):
     if current_state != PlayerState.jumping:
+        current_state = to
+        return true
+    elif current_state == PlayerState.jumping && is_on_floor():
         current_state = to
         return true
     return false
@@ -76,7 +78,8 @@ func set_animation():
         $AnimatedSprite.animation = "run"
         $AnimatedSprite.flip_h = true
     elif current_state == PlayerState.jumping:
-        pass
+        $AnimatedSprite.animation = "jump"
+        $AnimatedSprite.flip_h = move_vec.x < 0
     elif current_state == PlayerState.shooting:
         $AnimatedSprite.animation = "shoot"
     else:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/idle1.tres" type="Texture" id=2]
@@ -17,6 +17,12 @@
 [ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/run11.tres" type="Texture" id=15]
 [ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/shoot1.tres" type="Texture" id=16]
 [ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/shoot2.tres" type="Texture" id=17]
+[ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/jump1.tres" type="Texture" id=18]
+[ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/jump2.tres" type="Texture" id=19]
+[ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/jump3.tres" type="Texture" id=20]
+[ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/jump4.tres" type="Texture" id=21]
+[ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/jump5.tres" type="Texture" id=22]
+[ext_resource path="res://assets/scifi-collection/Sprites/space-marine/Tres/jump6.tres" type="Texture" id=23]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.2542, 36.5757 )
@@ -37,6 +43,11 @@ animations = [ {
 "loop": true,
 "name": "shoot",
 "speed": 12.0
+}, {
+"frames": [ ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
 } ]
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
@@ -52,7 +63,8 @@ __meta__ = {
 position = Vector2( 3.32867, 2.7739 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
-animation = "shoot"
+animation = "jump"
+frame = 3
 
 [node name="BulletPosition" type="Position2D" parent="."]
 position = Vector2( 39.9441, -9.15385 )
