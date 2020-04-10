@@ -1,4 +1,4 @@
-extends Area2D
+extends KinematicBody2D
 
 enum PlayerState {
     idle,
@@ -22,6 +22,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
     var move_vec = Vector2()
+    move_vec.y = 1
     
     var changed_state : bool = false
     var key_pressed : bool = false
@@ -35,7 +36,7 @@ func _process(delta):
     if Input.is_action_pressed("ui_jump"):
         key_pressed = true
         changed_state = set_state(PlayerState.jumping)
-        print("Jump!")
+        move_vec.y = -1
     if Input.is_action_pressed("ui_shoot"):
         key_pressed = true
         changed_state = set_state(PlayerState.shooting)
@@ -44,9 +45,10 @@ func _process(delta):
         changed_state = set_state(PlayerState.idle)
     
     if current_state == PlayerState.running_right:
-        move_vec.x += 1
+        move_vec.x = 1
     elif current_state == PlayerState.running_left:
-        move_vec.x -= 1
+        move_vec.x = -1
+        
        
     if changed_state: 
         set_animation()
@@ -54,9 +56,9 @@ func _process(delta):
     if (move_vec.x != 0):
         direction = sign(move_vec.x)
     
-    if is_moving_state(current_state):
-        move_vec = move_vec.normalized() * speed
-        position += move_vec * delta
+    move_vec = move_vec.normalized() * speed
+    move_and_slide(move_vec,Vector2(0,-1))
+
 
 func set_state(to):
     if current_state != PlayerState.jumping:
@@ -82,7 +84,6 @@ func set_animation():
 
 func _on_AnimatedSprite_frame_changed():
     if (current_state == PlayerState.shooting && $AnimatedSprite.frame == 0):
-        print("anim")
         spawn_bullet()
         
 func spawn_bullet():
