@@ -24,5 +24,5 @@ func _physics_process(delta):
         diff = ACCELERATION
     velocity = velocity.move_toward(input_vec.normalized() * MAX_SPEED, diff)
         
-    move_and_collide(velocity * delta)
+    velocity = move_and_slide(velocity)
         
