@@ -6,9 +6,7 @@ export var FRICTION : int = 15
 
 var velocity : Vector2 = Vector2.ZERO
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-    pass # Replace with function body.
+onready var animState = $AnimationTree.get("parameters/playback")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -22,6 +20,11 @@ func _physics_process(delta):
     var diff = FRICTION
     if input_vec != Vector2.ZERO:
         diff = ACCELERATION
+        $AnimationTree.set("parameters/Idle/blend_position", input_vec)
+        $AnimationTree.set("parameters/Run/blend_position", input_vec)
+        animState.travel("Run")
+    else:
+        animState.travel("Idle")
     velocity = velocity.move_toward(input_vec.normalized() * MAX_SPEED, diff)
         
     velocity = move_and_slide(velocity)
