@@ -5,10 +5,12 @@ export var ROLL_SPEED : int = MAX_SPEED * 1.4
 export var ACCELERATION : int = 20
 export var FRICTION : int = 15
 
+export var sword_damage := 1
+
 enum {
     MOVE,
     ROLL,
-    ATTACK    
+    ATTACK
 }
 
 var state = MOVE
@@ -19,6 +21,7 @@ export var direction := Vector2.DOWN
 onready var anim_state = $AnimationTree.get("parameters/playback")
 
 func _ready():
+    $HitboxPivot/SwordHitBox.damage_getter = funcref(self, "_sword_damage_getter")
     set_animation_tree_blend_position(direction)
     $AnimationTree.active = true
 
@@ -74,3 +77,6 @@ func set_animation_tree_blend_position(vec : Vector2) -> void:
     $AnimationTree.set("parameters/Run/blend_position", vec)
     $AnimationTree.set("parameters/Attack/blend_position", vec)
     $AnimationTree.set("parameters/Roll/blend_position", vec)
+
+func _sword_damage_getter():
+    return sword_damage

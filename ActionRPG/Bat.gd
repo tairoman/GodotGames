@@ -10,7 +10,7 @@ func _physics_process(_delta : float) -> void:
     
     
 func _on_HurtBox_area_entered(hitbox : HitBox) -> void:
-    $Stats.health -= hitbox.damage
+    $Stats.health -= hitbox.damage()
     knockback_velocity = KNOCKBACK_POWER * ($HurtBox.global_position - hitbox.global_position).normalized()
 
 
