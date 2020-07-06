@@ -28,18 +28,18 @@ func _physics_process(delta : float) -> void:
         get_tree().quit()
     
     match state:
-        MOVE: move_state(delta)
-        ATTACK: attack_state(delta)
-        ROLL: roll_state(delta)
+        MOVE: _move_state(delta)
+        ATTACK: _attack_state(delta)
+        ROLL: _roll_state(delta)
     
-func attack_state(_delta : float) -> void:
+func _attack_state(_delta : float) -> void:
     anim_state.travel("Attack")
     
-func roll_state(_delta : float) -> void:
+func _roll_state(_delta : float) -> void:
     anim_state.travel("Roll")
     var _ignore = move_and_slide(direction * ROLL_SPEED)
     
-func move_state(_delta : float) -> void:
+func _move_state(_delta : float) -> void:
     var input_vec := Vector2.ZERO
     input_vec.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
     input_vec.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
