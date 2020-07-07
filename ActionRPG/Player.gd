@@ -18,12 +18,14 @@ var state = MOVE
 var velocity := Vector2.ZERO
 export var direction := Vector2.DOWN
 
-onready var anim_state = $AnimationTree.get("parameters/playback")
+onready var hitbox = $HitboxPivot/SwordHitBox
+onready var animation_tree = $AnimationTree
+onready var anim_state = animation_tree.get("parameters/playback")
 
 func _ready():
-    $HitboxPivot/SwordHitBox.damage_getter = funcref(self, "_sword_damage_getter")
+    hitbox.damage_getter = funcref(self, "_sword_damage_getter")
     set_animation_tree_blend_position(direction)
-    $AnimationTree.active = true
+    animation_tree.active = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta : float) -> void:
@@ -73,10 +75,10 @@ func attack_animation_finished() -> void:
     state = MOVE
 
 func set_animation_tree_blend_position(vec : Vector2) -> void:
-    $AnimationTree.set("parameters/Idle/blend_position", vec)
-    $AnimationTree.set("parameters/Run/blend_position", vec)
-    $AnimationTree.set("parameters/Attack/blend_position", vec)
-    $AnimationTree.set("parameters/Roll/blend_position", vec)
+    animation_tree.set("parameters/Idle/blend_position", vec)
+    animation_tree.set("parameters/Run/blend_position", vec)
+    animation_tree.set("parameters/Attack/blend_position", vec)
+    animation_tree.set("parameters/Roll/blend_position", vec)
 
 func _sword_damage_getter():
     return sword_damage
