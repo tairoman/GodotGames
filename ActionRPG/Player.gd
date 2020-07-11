@@ -20,7 +20,7 @@ var state = MOVE
 var velocity := Vector2.ZERO
 export var direction := Vector2.DOWN
 
-onready var stats = $Stats
+onready var stats = $PlayerStats
 onready var hitbox = $HitboxPivot/SwordHitBox
 onready var animation_tree = $AnimationTree
 onready var anim_state = animation_tree.get("parameters/playback")
@@ -33,9 +33,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta : float) -> void:
-    if Input.is_action_pressed("ui_cancel"):
-        get_tree().quit()
-    
     match state:
         MOVE: _move_state(delta)
         ATTACK: _attack_state(delta)
@@ -72,6 +69,7 @@ func _move_state(_delta : float) -> void:
         
     if Input.is_action_just_pressed("ui_roll"):
         state = ROLL
+        stats.health += 1
 
 
 func roll_animation_finished() -> void:

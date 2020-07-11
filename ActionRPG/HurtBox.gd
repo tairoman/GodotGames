@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name HurtBox
+
 export(bool) var enable_effect = true
 export(PackedScene) var Effect = preload("res://HitEffect.tscn")
 export(NodePath) var effect_origin_node_path = "."

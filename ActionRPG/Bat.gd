@@ -18,6 +18,7 @@ var knockback_velocity := Vector2.ZERO
 var knockback_power := 80
 
 onready var stats = $Stats
+onready var hitbox = $HitBox
 onready var hurtbox = $HurtBox
 onready var collision_shape = $HurtBox/CollisionShape2D #TODO: Replace with prop in HurtBox
 onready var sprite = $AnimatedSprite
@@ -43,10 +44,10 @@ func _physics_process(_delta : float) -> void:
     sprite.flip_h = velocity.x < 0
     velocity = move_and_slide(velocity)
     
-func _on_HurtBox_area_entered(hitbox : HitBox) -> void:
+func _on_HurtBox_area_entered(area : HitBox) -> void:
     # Health needs to be set first so that KNOCKBACK_POWER = 0 if health becomes zero
-    stats.health -= hitbox.damage()
-    knockback_velocity = knockback_power * (hurtbox.global_position - hitbox.global_position).normalized()
+    stats.health -= area.damage()
+    knockback_velocity = knockback_power * area.global_position.direction_to(hurtbox.global_position)
 
 
 func _on_Stats_health_reached_zero():
@@ -76,5 +77,5 @@ func _on_PlayerDetectionZone_player_exited_zone():
     player = null
 
 
-func _on_HitBox_area_entered(area):
-    pass # Replace with function body.
+func _on_HitBox_area_entered(area : HurtBox):
+    knockback_velocity = knockback_power * area.global_position.direction_to(hitbox.global_position)

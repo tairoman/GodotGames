@@ -15,11 +15,12 @@ func get_health() -> int:
     return health
 
 func set_health(value : int) -> void:
-    health = value
-    emit_signal("health_changed")
-    if health <= 0:
+    if value <= 0:
         emit_signal("health_reached_zero")
-    elif health >= max_health:
+    elif value >= max_health:
         emit_signal("health_reached_max")
+    health = value
 # warning-ignore:narrowing_conversion
     health = clamp(health, 0, max_health)
+    assert(health <= max_health)
+    emit_signal("health_changed")

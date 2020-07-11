@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://World/CliffTileset.png" type="Texture" id=5]
 [ext_resource path="res://Grass.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Bat.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Global.gd" type="Script" id=8]
+[ext_resource path="res://HealthUI.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Tree.tscn" type="PackedScene" id=10]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -501,6 +504,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 0/z_index = 0
 
 [node name="World" type="Node2D"]
+script = ExtResource( 8 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
@@ -537,34 +541,54 @@ position = Vector2( 180, 40 )
 [node name="Bush3" parent="YSort/Bushes" instance=ExtResource( 1 )]
 position = Vector2( 50, 60 )
 
-[node name="YSort" type="YSort" parent="YSort"]
+[node name="Grass" type="YSort" parent="YSort"]
 
-[node name="Grass" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 90, 50 )
 
-[node name="Grass3" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass3" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 70, 50 )
 
-[node name="Grass4" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass4" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 70, 70 )
 
-[node name="Grass5" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass5" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 90, 90 )
 
-[node name="Grass6" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass6" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 70, 90 )
 
-[node name="Grass7" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass7" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 50, 90 )
 
-[node name="Grass8" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass8" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 50, 70 )
 
-[node name="Grass9" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass9" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 30, 90 )
 
-[node name="Grass2" parent="YSort/YSort" instance=ExtResource( 6 )]
+[node name="Grass2" parent="YSort/Grass" instance=ExtResource( 6 )]
 position = Vector2( 110, 90 )
+
+[node name="Trees" type="YSort" parent="YSort"]
+
+[node name="Tree" parent="YSort/Trees" instance=ExtResource( 10 )]
+position = Vector2( 40, 140 )
+
+[node name="Tree2" parent="YSort/Trees" instance=ExtResource( 10 )]
+position = Vector2( 230, 100 )
+
+[node name="Tree3" parent="YSort/Trees" instance=ExtResource( 10 )]
+position = Vector2( 20, 20 )
 
 [node name="Bat" parent="." instance=ExtResource( 7 )]
 position = Vector2( 150, 70 )
+
+[node name="HealthUI" parent="." instance=ExtResource( 9 )]
+anchor_right = 5.0
+anchor_bottom = 5.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 5.0
+margin_bottom = 5.0
+health_stats_path = NodePath("../YSort/Player/PlayerStats")
