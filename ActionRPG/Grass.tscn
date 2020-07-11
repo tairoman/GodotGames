@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://World/Grass.png" type="Texture" id=1]
 [ext_resource path="res://Grass.gd" type="Script" id=2]
 [ext_resource path="res://HurtBox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GrassEffect.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 7 )
@@ -18,10 +19,12 @@ offset = Vector2( -8, -8 )
 [node name="HurtBox" parent="." instance=ExtResource( 3 )]
 collision_layer = 8
 collision_mask = 0
+Effect = ExtResource( 4 )
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2( 8, 8 )
 shape = SubResource( 1 )
-[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="effect_finished" from="HurtBox" to="." method="_on_HurtBox_effect_finished"]
+[connection signal="effect_started" from="HurtBox" to="." method="_on_HurtBox_effect_started"]
 
 [editable path="HurtBox"]

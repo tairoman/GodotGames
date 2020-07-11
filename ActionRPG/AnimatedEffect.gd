@@ -1,5 +1,7 @@
 extends AnimatedSprite
 
+class_name Effect
+
 signal finished()
 
 export(NodePath) var effect_sprite_path = "." # self by default

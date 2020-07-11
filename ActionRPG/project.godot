@@ -9,13 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "AnimatedSprite",
+"class": "Effect",
+"language": "GDScript",
+"path": "res://AnimatedEffect.gd"
+}, {
 "base": "Area2D",
 "class": "HitBox",
 "language": "GDScript",
 "path": "res://HitBox.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
 } ]
 _global_script_class_icons={
-"HitBox": ""
+"Effect": "",
+"HitBox": "",
+"Player": ""
 }
 
 [application]

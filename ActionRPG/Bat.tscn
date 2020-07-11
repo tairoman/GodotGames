@@ -1,10 +1,12 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Enemies/Bat.png" type="Texture" id=1]
 [ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=2]
 [ext_resource path="res://HurtBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Bat.gd" type="Script" id=4]
 [ext_resource path="res://Stats.tscn" type="PackedScene" id=5]
+[ext_resource path="res://PlayerDetectionZone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://HitBox.tscn" type="PackedScene" id=7]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -41,6 +43,12 @@ radius = 3.55092
 radius = 6.62804
 height = 4.58834
 
+[sub_resource type="CircleShape2D" id=9]
+radius = 80.0
+
+[sub_resource type="CircleShape2D" id=10]
+radius = 5.3082
+
 [node name="Bat" type="KinematicBody2D"]
 collision_layer = 16
 script = ExtResource( 4 )
@@ -61,6 +69,8 @@ shape = SubResource( 7 )
 [node name="HurtBox" parent="." instance=ExtResource( 3 )]
 collision_layer = 8
 collision_mask = 0
+effect_origin_node_path = NodePath("../AnimatedSprite")
+effect_offset = Vector2( 0, -16 )
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2( 0, -15 )
@@ -68,7 +78,26 @@ shape = SubResource( 8 )
 
 [node name="Stats" parent="." instance=ExtResource( 5 )]
 max_health = 3
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+shape = SubResource( 9 )
+
+[node name="HitBox" parent="." instance=ExtResource( 7 )]
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2( 0, -14.614 )
+shape = SubResource( 10 )
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="health_reached_zero" from="Stats" to="." method="_on_Stats_health_reached_zero"]
+[connection signal="player_entered_zone" from="PlayerDetectionZone" to="." method="_on_PlayerDetectionZone_player_entered_zone"]
+[connection signal="player_exited_zone" from="PlayerDetectionZone" to="." method="_on_PlayerDetectionZone_player_exited_zone"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
 
 [editable path="HurtBox"]
+
+[editable path="PlayerDetectionZone"]
+
+[editable path="HitBox"]
