@@ -18,11 +18,13 @@ var knockback_velocity := Vector2.ZERO
 var knockback_power := 80
 
 onready var stats = $Stats
+onready var soft_collision_area = $SoftCollisionArea
 onready var hitbox = $HitBox
 onready var hurtbox = $HurtBox
 onready var collision_shape = $HurtBox/CollisionShape2D #TODO: Replace with prop in HurtBox
 onready var sprite = $AnimatedSprite
 onready var shadow_sprite = $ShadowSprite
+onready var wander_controller = $WanderController
 
 var state = State.IDLE
 
@@ -35,13 +37,22 @@ func _physics_process(_delta : float) -> void:
     match state:
         State.IDLE:
             velocity = velocity.move_toward(Vector2.ZERO, FRICTION)
+            if wander_controller.time_left() == 0:
+                wander_controller.start_timer()
         State.WANDER:
-            pass
+            var target_vec = global_position.direction_to(wander_controller.target_position)
+            velocity = velocity.move_toward(MAX_SPEED * target_vec, ACCELERATION)
+            
+            if global_position.distance_to(wander_controller.target_position) < 4:
+                state = State.IDLE
+            
         State.CHASE:
             var target_vec = global_position.direction_to(player.global_position)
             velocity = velocity.move_toward(MAX_SPEED * target_vec, ACCELERATION)
             
     sprite.flip_h = velocity.x < 0
+    
+    velocity += soft_collision_area.push_vec * 4
     velocity = move_and_slide(velocity)
     
 func _on_HurtBox_area_entered(area : HitBox) -> void:
@@ -72,6 +83,7 @@ func _on_PlayerDetectionZone_player_entered_zone(player_node):
     player = player_node
     state = State.CHASE
 
+
 func _on_PlayerDetectionZone_player_exited_zone():
     state = State.IDLE
     player = null
@@ -79,3 +91,11 @@ func _on_PlayerDetectionZone_player_exited_zone():
 
 func _on_HitBox_area_entered(area : HurtBox):
     knockback_velocity = knockback_power * area.global_position.direction_to(hitbox.global_position)
+
+
+func _on_WanderController_goto_idle():
+    state = State.IDLE
+
+
+func _on_WanderController_goto_wander():
+    state = State.WANDER

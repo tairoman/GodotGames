@@ -9,6 +9,8 @@ export var FRICTION : int = 15
 
 export var sword_damage := 1
 
+export(PackedScene) var HurtSoundEffect = preload("res://PlayerHurtSound.tscn")
+
 enum {
     MOVE,
     ROLL,
@@ -24,6 +26,7 @@ onready var stats = $PlayerStats
 onready var hitbox = $HitboxPivot/SwordHitBox
 onready var animation_tree = $AnimationTree
 onready var anim_state = animation_tree.get("parameters/playback")
+onready var blink_animation_player = $BlinkAnimationPlayer
 
 
 func _ready():
@@ -94,6 +97,9 @@ func _sword_damage_getter():
 
 func _on_HurtBox_area_entered(area : HitBox):
     stats.health -= area.damage()
+    var effect = HurtSoundEffect.instance()
+    get_parent().add_child(effect)
+    blink_animation_player.ensure_blinking()
 
 
 func _on_Stats_health_reached_zero():

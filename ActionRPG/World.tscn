@@ -508,9 +508,8 @@ script = ExtResource( 8 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
-centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 320, 180 )
+region_rect = Rect2( 0, 0, 944, 592 )
 
 [node name="DirtPathTileMap" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
@@ -525,10 +524,18 @@ collision_mask = 0
 format = 1
 tile_data = PoolIntArray( 5, 0, 196608, 6, 0, 6, 7, 0, 5, 8, 0, 196609, 9, 0, 7, 65542, 0, 131072, 65543, 0, 131074, 65545, 0, 65539, 131081, 0, 131075 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 88.2234, 20.906 )
+current = true
+smoothing_enabled = true
+
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 88.2234, 20.906 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Player"]
+remote_path = NodePath("../../../Camera2D")
 
 [node name="Bushes" type="YSort" parent="YSort"]
 
@@ -582,13 +589,21 @@ position = Vector2( 230, 100 )
 position = Vector2( 20, 20 )
 
 [node name="Bat" parent="." instance=ExtResource( 7 )]
-position = Vector2( 150, 70 )
+position = Vector2( 170, 80 )
 
-[node name="HealthUI" parent="." instance=ExtResource( 9 )]
+[node name="Bat2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 80, 120 )
+
+[node name="Bat3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 200, 120 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 9 )]
 anchor_right = 5.0
 anchor_bottom = 5.0
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 5.0
 margin_bottom = 5.0
-health_stats_path = NodePath("../YSort/Player/PlayerStats")
+health_stats_path = NodePath("../../YSort/Player/PlayerStats")
