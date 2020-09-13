@@ -51,6 +51,7 @@
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
 world_tile_map_path = NodePath("TileMap")
+world_width = 15
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 1 )

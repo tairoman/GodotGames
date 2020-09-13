@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Wall",
+"language": "GDScript",
+"path": "res://Wall.gd"
+} ]
 _global_script_class_icons={
-
+"Wall": ""
 }
 
 [application]
@@ -18,6 +23,10 @@ _global_script_class_icons={
 config/name="SidescrollerStrat"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+GlobalData="*res://GlobalData.gd"
 
 [rendering]
 

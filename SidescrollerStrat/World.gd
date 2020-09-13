@@ -3,8 +3,7 @@ extends Node2D
 export (NodePath) var world_tile_map_path = "./TileMap"
 
 export (PackedScene) var wall_scene = preload("res://Wall.tscn")
-
-const chunk_size := 64
+export (PackedScene) var unit_scene = preload("res://MeleeUnit.tscn")
 
 # unit in chunks
 export(int) var world_width = 10
@@ -41,12 +40,21 @@ func _should_put_wall(chunk_x : int) -> bool:
     
 func _create_wall(chunk_x : int) -> void:
     var wall = wall_scene.instance()
-    add_child(wall)
     wall.position.y = _to_world(ground_height)
     wall.position.x = _to_world(chunk_x)
+    wall.direction = sign(chunk_x)
+    add_child(wall)
+    _create_unit(wall)
     
 func _to_world(chunk : int) -> int:
-    return chunk * chunk_size
+    return chunk * GlobalData.CHUNK_SIZE
     
 func _to_chunk(world : int) -> int:
-    return world / chunk_size
+    return world / GlobalData.CHUNK_SIZE
+    
+    
+func _create_unit(target_wall : Wall):
+    var unit = unit_scene.instance()
+    unit.position.y = _to_world(ground_height)
+    target_wall.assign_unit_front(unit)
+    add_child(unit)
